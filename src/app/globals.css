@@ -3,9 +3,39 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background: #edf0f7;
+
+  --primary: #0f52ba;
+  --primary-light: #0f52ba;
+  --button: #0f52ba;
+
+  --white: #ffffff;
+  --white-light: #ffffff;
+  --white-dark: #eeeeee;
+
+  --black: #363f5f;
+  --black-light: #444f76;
+  --black-dark: #272d44;
+
+  --blue: #0565d0;
+  --blue-light: #247add;
+  --blue-dark: #00499d;
+
+  --red: #e52e4d;
+  --red-light: #fa4866;
+  --red-dark: #c9233f;
+
+  --green: #33cc95;
+  --green-light: #33cc95;
+  --green-dark: #29a477;
+
+  --yellow: #ccc133;
+  --yellow-light: #ccc133;
+  --yellow-dark: #ccc133;
+
+  --text: #055bbb;
+  --text-light: #ffffff;
+  --text-dark: #000000;
 }
 
 @media (prefers-color-scheme: dark) {
