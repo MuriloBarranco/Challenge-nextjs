@@ -1,23 +1,112 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
+import { motion } from "framer-motion"
+import {
+  Container,
+  Card,
+  ProductListUl,
+  CardHeader,
+  CardInfo,
+  CardBottom,
+} from "./styles"
+import api from "../../../services/api"
+import { FaArchive } from "react-icons/fa"
+import { toast } from "react-toastify"
+import { formatPrice } from "@/functions/formatReal"
 
-const products = [
-  { id: 1, name: "Produto 1", price: "R$ 100" },
-  { id: 2, name: "Produto 2", price: "R$ 200" },
-  { id: 3, name: "Produto 3", price: "R$ 300" },
-]
+interface Product {
+  brand: string
+  createdAt: string
+  description: string
+  id: number
+  name: string
+  photo: string
+  price: string
+  updatedAt: string
+}
 
-const ProductList = () => {
+interface ProductListProps {
+  addProduct: (product: Product) => void
+}
+
+const ProductList: React.FC<ProductListProps> = ({ addProduct }) => {
+  const [products, setProducts] = useState<Product[]>([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await api.get("products", {
+          params: {
+            page: 1,
+            rows: 8,
+            sortBy: "id",
+            orderBy: "ASC",
+          },
+        })
+        setProducts(response.data.products || [])
+      } catch (error) {
+        console.error("Erro ao buscar produtos:", error)
+      }
+    }
+
+    fetchProducts()
+  }, [])
+
+  const handleBuyProduct = (product: Product) => {
+    const purchasedProducts = JSON.parse(
+      localStorage.getItem("products_purchased") || "[]"
+    )
+
+    const isProductAlreadyPurchased = purchasedProducts.some(
+      (purchasedProduct: Product) => purchasedProduct.id === product.id
+    )
+
+    if (isProductAlreadyPurchased) {
+      toast.warning("Você já comprou esse produto. 🖐🏻")
+      return
+    }
+
+    purchasedProducts.push(product)
+    localStorage.setItem(
+      "products_purchased",
+      JSON.stringify(purchasedProducts)
+    )
+    toast.success("Produto comprado. 🥰")
+
+    window.dispatchEvent(new Event("productsUpdated"))
+  }
+
   return (
-    <div className="w-full p-4">
-      <h2 className="text-2xl mb-4">Lista de Produtos</h2>
-      <ul>
+    <Container>
+      <ProductListUl>
         {products.map((product) => (
-          <li key={product.id} className="border p-2 mb-2">
-            {product.name} - {product.price}
-          </li>
+          <motion.div
+            key={product.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Card>
+              <CardHeader>
+                <img src={product.photo} alt={product.name} />
+              </CardHeader>
+              <CardInfo>
+                <div>
+                  <h3>{product.name}</h3>
+                  <button>
+                    <p>{formatPrice(product.price)}</p>
+                  </button>
+                </div>
+                <p>{product.description}</p>
+              </CardInfo>
+              <CardBottom onClick={() => handleBuyProduct(product)}>
+                <FaArchive size={13} />
+                <p>COMPRAR</p>
+              </CardBottom>
+            </Card>
+          </motion.div>
         ))}
-      </ul>
-    </div>
+      </ProductListUl>
+    </Container>
   )
 }
 

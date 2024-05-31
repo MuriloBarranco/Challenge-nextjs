@@ -13,7 +13,7 @@
   --white-light: #ffffff;
   --white-dark: #eeeeee;
 
-  --black: #363f5f;
+  --black: #373737;
   --black-light: #444f76;
   --black-dark: #272d44;
 
@@ -33,9 +33,9 @@
   --yellow-light: #ccc133;
   --yellow-dark: #ccc133;
 
-  --text: #055bbb;
+  --text: #252525;
   --text-light: #ffffff;
-  --text-dark: #000000;
+  --text-dark: #000;
 }
 
 @media (prefers-color-scheme: dark) {
