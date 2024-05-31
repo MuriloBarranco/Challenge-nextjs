@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { FaShoppingCart } from "react-icons/fa"
 
 export const NavbarContainer = styled.nav`
   width: 100%;
@@ -26,23 +27,63 @@ export const Title = styled.div`
   }
 `
 
-export const MenuButton = styled.button`
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  color: white;
+export const MenuButton = styled.div`
+  width: 90px;
+  height: 45px;
+  gap: 5px;
+  border-radius: 8px;
+
+  background-color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
   cursor: pointer;
 
-  &:focus {
-    outline: none;
+  p {
+    font-size: 18px;
+    color: var(--text);
   }
+  &:hover {
+    filter: brightness(0.9);
+  }
+`
+
+export const Icon = styled(FaShoppingCart)`
+  color: var(--text);
 `
 
 export const Modal = styled.div`
   position: absolute;
   top: 4rem;
-  right: 1rem;
+  right: 0rem;
   background-color: white;
   padding: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`
+
+export const ProductList = styled.ul`
+  width: 486px;
+  height: 100%;
+`
+
+export const ProductItem = styled.li`
+  margin-bottom: 10px;
+`
+
+export const ProductInfo = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+export const ProductName = styled.p`
+  margin-right: 10px;
+  color: var(--text);
+`
+
+export const RemoveButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
 `
